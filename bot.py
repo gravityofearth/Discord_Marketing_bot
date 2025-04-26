@@ -2,8 +2,16 @@ import discord
 from discord.ext import commands
 import random
 import asyncio
-from pandas import pandas as pd
-import datetime
+import pandas as pd
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+token = os.getenv("TOKEN_1")
+url_sheet = os.getenv("URL")
+channel_1 = os.getenv("CHANNEL_1")
+channel_2 = os.getenv("CHANNEL_2")
+channel_3 = os.getenv("CHANNEL_3")
 
 # Initialize the bot with all intents
 intents = discord.Intents.all()
@@ -64,8 +72,7 @@ async def chat(ctx, *, message: str):
 def sync_sheet_data():
     global messages
     # Replace with your Google Sheet URL
-    url = ""
-    df = pd.read_csv(url)
+    df = pd.read_csv(url_sheet)
     data = df.values
     messages = [
         d[0]
@@ -79,7 +86,7 @@ async def auto_post():
     await bot.wait_until_ready()
 
     # List of channels to post in (replace with your desired channels)
-    target_channels = []
+    target_channels = [int(channel_1), int(channel_2), int(channel_3)]
 
     while not bot.is_closed():
         for channel_id in target_channels:
@@ -99,4 +106,4 @@ async def auto_post():
         await asyncio.sleep(random.randint(18, 72))
 
 # Run the bot (replace with your actual bot token)
-bot.run('')
+bot.run(token)

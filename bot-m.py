@@ -4,6 +4,16 @@ import random
 import asyncio
 import pandas as pd
 import multiprocessing
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+token_1 = os.getenv("TOKEN_1")
+token_2 = os.getenv("TOKEN_2")
+url_sheet = os.getenv("URL")
+channel_1 = os.getenv("CHANNEL_1")
+channel_2 = os.getenv("CHANNEL_2")
+channel_3 = os.getenv("CHANNEL_3")
 
 class DiscordBot:
     def __init__(self, token, prefix='!', target_channels=None, message_probability=0.3, 
@@ -72,8 +82,7 @@ class DiscordBot:
         await ctx.send(human_message)
     
     def sync_sheet_data(self):
-        url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ5VWDSMXKIWOaTxuMNhJEXNOrGy1QAiW6E0sQR4S194mM2n6u7i4oUSdpK4_tgUBnn4CF0niAWvDT/pub?output=csv"
-        df = pd.read_csv(url)
+        df = pd.read_csv(url_sheet)
         data = df.values
         self.messages = [d[0] for d in data]
     
@@ -105,10 +114,10 @@ class DiscordBot:
 bot_configs = [
     {
         # Enter your bot1 token here
-        "token": "",
+        "token": token_1,
         "prefix": "!",
         # Enter your target channel IDs here
-        "target_channels": [],
+        "target_channels": [int(channel_1), int(channel_2), int(channel_3)],
         "message_probability": 0.3,
         "post_interval_min": 18,
         "post_interval_max": 72
@@ -116,10 +125,10 @@ bot_configs = [
     # Add more bot configurations as needed
     {
         # Enter your bot2 token here
-        "token": "",
-        "prefix": "?",~
+        "token": token_2,
+        "prefix": "?",
         # Enter your target channel IDs here
-        "target_channels": [],
+        "target_channels": [int(channel_1), int(channel_2), int(channel_3)],
         "message_probability": 0.2,
         "post_interval_min": 25,
         "post_interval_max": 90
