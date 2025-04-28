@@ -16,8 +16,7 @@ channel_2 = os.getenv("CHANNEL_2")
 channel_3 = os.getenv("CHANNEL_3")
 
 class DiscordBot:
-    def __init__(self, token, prefix='!', target_channels=None, message_probability=0.3, 
-                 post_interval_min=18, post_interval_max=72):
+    def __init__(self, token, prefix='!', target_channels=None, message_probability=0.3, post_interval_min=18, post_interval_max=72):
         # Initialize the bot with all intents
         self.intents = discord.Intents.all()
         self.bot = commands.Bot(command_prefix=prefix, intents=self.intents)
